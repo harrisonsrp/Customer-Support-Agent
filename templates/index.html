@@ -1,0 +1,30 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+
+<div class="index-table">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Hotel_Name</th>
+                <th>Review</th>
+                <!-- Add more headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+            <tr>
+                <td>{{ record.Hotel_Name }}</td>
+                <td>{{ record.Negative_Review }}</td>
+                <!-- Add more fields if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock%}

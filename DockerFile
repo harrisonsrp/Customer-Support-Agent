@@ -1,0 +1,19 @@
+# Base Image
+FROM python:3.11
+
+# working directory
+WORKDIR /app
+
+# Copy the application code into the container
+COPY . /app
+
+# dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+#port
+EXPOSE 5000
+
+ENV FLASK_APP=app.py
+
+# run the application
+CMD ["flask", "run", "--host", "0.0.0.0"]
