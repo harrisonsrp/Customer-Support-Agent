@@ -1,6 +1,6 @@
 from flask import Flask, render_template, render_template, request, redirect, jsonify
 from datetime import datetime
-from data_read import read_data_from_mongodb
+from data_crud import read_mongodb
 # Create Flask app instance
 app = Flask(__name__)
 
@@ -8,11 +8,19 @@ app = Flask(__name__)
 
 ####### Start Routes #######
 
-# Data Analyst Route
+# Recent Reviews Route
 @app.route('/')
 def index():
-    cursor  = read_data_from_mongodb()
-    return render_template('index.html', data=cursor)
+    # cursor  = ...
+    return render_template('index.html')
+
+
+
+# Send Reviews Route
+@app.route('/sendReview')
+def sendReview():
+    #red data from mongodb
+    return render_template('reviews/index.html')
 
 
 ####### End Routes #######

@@ -1,19 +1,25 @@
 # Base Image
 FROM python:3.11
 
-# working directory
+# Set up MongoDB
+RUN apt-get update && apt-get install -y mongodb
+RUN mkdir -p /data/db
+
+# Working directory
 WORKDIR /app
 
 # Copy the application code into the container
 COPY . /app
 
-# dependencies
+# Dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-#port
+# Port
 EXPOSE 5000
 
+# Set environment variables
 ENV FLASK_APP=app.py
+ENV MONGO_DB_URL=mongodb://localhost:27017/hotel_reviews
 
-# run the application
+# Run the application
 CMD ["flask", "run", "--host", "0.0.0.0"]
