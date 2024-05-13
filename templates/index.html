@@ -6,5 +6,26 @@
 
 {% block content %}
 
+<div class="index-table">
+    
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Review</th>
+                <th>Time</th>
+                <!-- Add more headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+            <tr>
+                <td>{{ record.review_content }}</td>
+                <td>{{ record.timestamp.date() }}</td>
+                <!-- Add more fields if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock%}
