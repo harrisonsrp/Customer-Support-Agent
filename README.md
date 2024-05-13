@@ -6,4 +6,4 @@ Many businesses struggle to provide efficient and personalized customer support 
 ## Proposed Solution
 I decided to develop a Flask-based web application that serves as an intelligent customer support system. The system will integrate various machine learning models to classify and respond to customer reviews.
 
-<img src="assets/overview.png">
+<img src="assets/overview2.png">
