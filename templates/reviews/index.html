@@ -1,0 +1,23 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4><i class="fas fa-star"></i> Send a New Review</h4>
+            <form method="POST" action="/submitReview">
+                <div class="form-group">
+                    <textarea class="form-control" name="review_content" rows="5" placeholder="Write your review here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
