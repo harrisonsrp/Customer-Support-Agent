@@ -9,18 +9,24 @@
 <div class="index-table">
     
     <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
+        <thead class="thead-dark text-center">
             <tr>
                 <th>Review</th>
                 <th>Time</th>
+                <th>Tag</th>
+                <th>Respond with AI</th>
+                <th></th>
                 <!-- Add more headers if needed -->
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
             {% for record in data %}
             <tr>
-                <td>{{ record.review_content }}</td>
+                <td>{{ record.review_content[:100] }}</td>
                 <td>{{ record.timestamp.date() }}</td>
+                <td>Positive | Negative</td>
+                <th><button class="btn btn-primary"><a>Generate Response</a> </button></th>
+                <th><button class="btn btn-info"><a>Read</a> </button></th>
                 <!-- Add more fields if needed -->
             </tr>
             {% endfor %}
