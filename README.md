@@ -1,2 +1,2 @@
 
-<img src="assets/overview.png">
+<img src="assets/overview.png" width="1000">
