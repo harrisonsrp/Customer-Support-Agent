@@ -9,4 +9,4 @@ I decided to develop a Flask-based web application that serves as an intelligent
 
 #### The interface of the application will be like this (but a bit more beautiful :D):
 
-<img src="assets/overview3.png">
+<img src="overview3.png">
