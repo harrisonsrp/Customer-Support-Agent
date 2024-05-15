@@ -1,6 +1,6 @@
 from flask import Flask, render_template, render_template, request, redirect, jsonify,flash
 from datetime import datetime
-from database_conn import collection, cursor
+from database_conn import collection_reviews
 # Create Flask app instance
 app = Flask(__name__)
 app.secret_key = '##Secret##' #for flash
@@ -11,7 +11,7 @@ app.secret_key = '##Secret##' #for flash
 # Recent Reviews Route
 @app.route('/')
 def index():
-    cursor  = collection.find({})
+    cursor  = collection_reviews.find({})
     return render_template('index.html', data = cursor)
 
 

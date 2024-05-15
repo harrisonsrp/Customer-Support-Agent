@@ -11,10 +11,10 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark text-center">
             <tr>
-                <th>Review</th>
+                <th>Customer issue</th>
                 <th>Time</th>
-                <th>Tag</th>
-                <th>Respond with AI</th>
+                <th>Category</th>
+                <th>Solve it with AI</th>
                 <th></th>
                 <!-- Add more headers if needed -->
             </tr>
@@ -24,9 +24,9 @@
             <tr>
                 <td>{{ record.review_content[:100] }}</td>
                 <td>{{ record.timestamp.date() }}</td>
-                <td>Positive</td>
-                <th><button class="btn btn-primary"><a>Generate Response</a> </button></th>
-                <th><button class="btn btn-info"><a>Read the Review</a> </button></th>
+                <td>Product</td>
+                <th><button class="btn btn-primary"><a>Take Action</a> </button></th>
+                <th><button class="btn btn-info"><a>Read</a> </button></th>
                 <!-- Add more fields if needed -->
             </tr>
             {% endfor %}
