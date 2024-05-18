@@ -1,6 +1,6 @@
 from flask import Flask, render_template, render_template, request, redirect, jsonify,flash
 from datetime import datetime
-from database_conn import collection_reviews
+from database_conn import collection_tickets, collection_faq,collection_faq_cat
 # Create Flask app instance
 app = Flask(__name__)
 app.secret_key = '##Secret##' #for flash
@@ -11,26 +11,56 @@ app.secret_key = '##Secret##' #for flash
 # Recent Reviews Route
 @app.route('/')
 def index():
-    cursor  = collection_reviews.find({})
+    cursor  = collection_tickets.find({})
     return render_template('index.html', data = cursor)
 
-
-
-# Send Reviews Page Route
-@app.route('/sendReview')
-def sendReview():
+# New ticket Page Route
+@app.route('/sendTicket')
+def sendTicket():
     #red data from mongodb
-    return render_template('reviews/index.html')
-# Write review to database
-@app.route('/submitReview', methods=['POST'])
-def submit_review():
+    return render_template('tickets/index.html')
+
+
+# Write ticket to database
+@app.route('/submitTickets', methods=['POST'])
+def submit_ticket():
     if request.method == 'POST':
-        review_content = request.form['review_content']
+        ticket_content = request.form['ticket_content']
         timestamp = datetime.now()  # Get current timestamp
         # Insert the review into MongoDB
-        collection.insert_one({'review_content': review_content, 'timestamp': timestamp})
-        flash('Review submitted successfully', 'success')
-        return redirect('/sendReview')
+        collection_tickets.insert_one({'ticket_content': ticket_content, 'timestamp': timestamp})
+        flash('Your Request submitted successfully', 'success')
+        return redirect('/sendTicket')
+
+
+
+# FAQ Route
+@app.route('/faq')
+def faq():
+    cursor  = collection_faq.find({})
+    return render_template('faq/FAQ.html', data = cursor)
+
+# New ticket Page Route
+@app.route('/faq_create')
+def faq_create():
+    category = collection_faq_cat.find({})
+    #red data from mongodb
+    return render_template('faq/create.html', category = category)
+
+# Write faq to database
+@app.route('/submitFAQ', methods=['POST'])
+def submitFAQ():
+    if request.method == 'POST':
+        faq_question = request.form['faq_question']
+        faq_answer = request.form['faq_answer']
+        faq_category = request.form['faq_category']
+        timestamp = datetime.now()  # Get current timestamp
+        # Insert the review into MongoDB
+        collection_faq.insert_one({'question': faq_question, 'answer' : faq_answer, 'category' : faq_category, 'timestamp': timestamp})
+        flash('Your FAQ submitted successfully', 'success')
+        return redirect('/faq')
+
+
 
 ####### End Routes #######
 

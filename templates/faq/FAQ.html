@@ -1,0 +1,32 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+
+<div class="index-table">
+    
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th>Qestion</th>
+                <th>Answer</th>
+                <th>Category</th>
+                <!-- Add more headers if needed -->
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {% for record in data %}
+            <tr>
+                <td>{{ record.question }}</td>
+                <td>{{ record.answer }}</td>
+                <td>{{ record.category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock%}
