@@ -1,13 +1,12 @@
+#Flask lib
 from flask import flash, redirect, url_for,render_template
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 #Auth lib
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 #Database
 from Database import collection_users
