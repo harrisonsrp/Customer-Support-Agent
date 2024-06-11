@@ -23,7 +23,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
-
 class User(UserMixin):
     
     def __init__(self, id, username, email, password):
@@ -32,9 +31,6 @@ class User(UserMixin):
         self.email = email
         self.password = password
         
-    
-
-
     def register(form):
         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
         new_user = {
@@ -46,8 +42,6 @@ class User(UserMixin):
         collection_users.insert_one(new_user)
         flash('Your account has been created!', 'success')
         
-
-    
     def login(form):
         user_data = collection_users.find_one({'email': form.email.data})
         if user_data and check_password_hash(user_data['password'], form.password.data):
@@ -59,7 +53,6 @@ class User(UserMixin):
     def logout():
         logout_user()
         
-    
     def home():
         pass
 
