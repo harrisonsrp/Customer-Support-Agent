@@ -13,8 +13,10 @@
             <tr>
                 <th>Customer issue</th>
                 <th>Time</th>
+                <th>Status</th>
                 <th>Category</th>
                 <th>Solve it with AI</th>
+        
                 <th></th>
                 <!-- Add more headers if needed -->
             </tr>
@@ -22,8 +24,9 @@
         <tbody class="text-center">
             {% for record in data %}
             <tr>
-                <td>{{ record.review_content[:100] }}</td>
+                <td>{{ record.ticket_content[:100] }}</td>
                 <td>{{ record.timestamp.date() }}</td>
+                <td>{{ record.status}}</td>
                 <td>Product</td>
                 <th><button class="btn btn-primary"><a>Take Action</a> </button></th>
                 <th><button class="btn btn-info"><a>Read</a> </button></th>

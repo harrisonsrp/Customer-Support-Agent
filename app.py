@@ -1,13 +1,24 @@
-from flask import Flask, render_template, render_template, request, redirect, jsonify
-from Database import collection_tickets, collection_faq,collection_faq_cat
+from flask import Flask, render_template, render_template, request, redirect, jsonify, url_for
+from Database import collection_tickets, collection_faq,collection_faq_cat,collection_users
+
+#Auth lib
+from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 #Objects
-from Ticket import *
-from FAQ import *
+import Ticket
+import FAQ
+import Authentication as Auth
 # Create Flask app instance
 app = Flask(__name__)
 app.secret_key = '##Secret##' #for flash
+
+
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
 
 
 ####### DataBase Collections ####
@@ -15,6 +26,48 @@ ticket_coll = collection_tickets
 faq_coll = collection_faq
 faq_cat_coll = collection_faq_cat
 ####### Start Routes #######
+
+
+####### Auth ######
+@login_manager.user_loader
+def load_user(user_id):
+    user = collection_users.find_one({"_id": int(user_id)})
+    if user:
+        return Auth.User(id=user['_id'], username=user['username'], email=user['email'], password=user['password'])
+    return None
+    
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = Auth.RegistrationForm()
+    if form.validate_on_submit():
+        Auth.User.register(form)
+        return redirect(url_for('login')) 
+    else:
+        return render_template('Auth/user/register.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = Auth.LoginForm()
+    if form.validate_on_submit():
+        Auth.User.login(form)
+        return redirect(url_for('home'))
+    else:
+        return render_template('Auth/user/login.html', form=form)
+    
+@app.route('/logout')
+@login_required
+def logout():
+    Auth.User.logout()
+    return redirect(url_for('login'))
+
+
+@app.route('/home')
+@login_required
+def home():
+    if current_user.is_authenticated:
+        return render_template('Auth/user/home.html')
+    else:
+        return render_template('Auth/user/login.html')
 
 # Recent Reviews Route
 @app.route('/')

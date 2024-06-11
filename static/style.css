@@ -1,3 +1,16 @@
+body, html {
+    height: 100%; /* Ensure the body and html elements take up the full height of the viewport */
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    height: 100%; /* Set the height of the content container to fill the viewport */
+    overflow: auto; /* Enable scrolling when content overflows the container */
+    padding: 20px; /* Add padding to avoid content sticking to the edges */
+}
+
+
 .my_btn{
 background-color: #333;
 border-color: transparent;
@@ -10,4 +23,9 @@ border-color: transparent;
 .index-table {
     overflow-x: auto;
     border: none;
+}
+
+/* My Footer */
+.my_footer {
+    margin-top:  120px;
 }

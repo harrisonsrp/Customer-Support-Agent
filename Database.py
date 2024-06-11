@@ -18,6 +18,11 @@ collection_faq = db['faq']
 
 #FAQ category Collection
 collection_faq_cat = db['faq_category']
+
+
+#Users Collection
+collection_users = db['users']
+
 # #clean_data
 # collection_clean_data = db['clean_data']
 
