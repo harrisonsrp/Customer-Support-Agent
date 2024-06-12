@@ -69,15 +69,17 @@ def home():
     else:
         return render_template('Auth/user/login.html')
 
-# Recent Reviews Route
-@app.route('/')
-def index():
+# Recent tickets Route
+@app.route('/ticketShow')
+@login_required
+def ticketShow():
     data_ticekt = ticket_coll.find({})
-    return render_template('index.html', data=data_ticekt)
+    return render_template('tickets/index.html', data=data_ticekt)
 
 
 # New ticket Page Route
 @app.route('/sendTicket')
+@login_required
 def sendTicket():
     category = faq_cat_coll.find({})
     return render_template('tickets/create.html', category = category)
@@ -85,6 +87,7 @@ def sendTicket():
 
 # Write ticket to database
 @app.route('/submitTickets', methods=['POST'])
+@login_required
 def submit_ticket():
     if request.method == 'POST':
         # Pass input data in Ticket class
@@ -118,7 +121,12 @@ def submitFAQ():
         return redirect('/faq')
 
 
-
+# Index Page
+@app.route('/index')
+def index():
+    return render_template('index.html')
+    
+    
 ####### End Routes #######
 
 

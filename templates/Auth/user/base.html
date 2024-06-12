@@ -19,17 +19,26 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('index')}}">
-                    Home
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTickets" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tickets
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownTickets">
+                    <a class="dropdown-item" href="{{ url_for('ticketShow') }}">View All Tickets</a>
+                    <a class="dropdown-item" href="{{ url_for('sendTicket') }}">Create a Ticket</a>
+                </div>
             </li>
 
+
             <li class="nav-item ">
-              <a class="nav-link" href="{{ url_for('faq') }}">FAQ</a>
+                <a class="nav-link " href="/user-edit" id="navbarDropdownTickets">
+                    Profile Setting
+                </a>
+            
             </li>
+          
         </ul>
-      </div>
+        
         <form class="form-inline my-2 my-lg-0">
           {% if current_user.is_authenticated %}
               <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('home') }}">Home</a>

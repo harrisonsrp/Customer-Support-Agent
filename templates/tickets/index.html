@@ -1,33 +1,40 @@
 
 
-{% extends "base.html" %}
+{% extends "Auth/user/base.html" %}
 
 {% block title %}Home page{% endblock %}
 
 {% block content %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-    {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
-{% endwith %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h4><i class="fas fa-star"></i> Send a New Ticket</h4>
-            <form method="POST" action="/submitTickets">
-                <div class="form-group">
-                    <textarea class="form-control" name="ticket_content" rows="5" placeholder="Write your request here..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
+<div class="index-table">
+    
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th>Customer issue</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Solve it with AI</th>
+        
+                <th></th>
+                <!-- Add more headers if needed -->
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {% for record in data %}
+            <tr>
+                <td>{{ record.ticket_content[:100] }}</td>
+                <td>{{ record.timestamp.date() }}</td>
+                <td>{{ record.status}}</td>
+                <td>Product</td>
+                <th><button class="btn btn-primary"><a>Take Action</a> </button></th>
+                <th><button class="btn btn-info"><a>Read</a> </button></th>
+                <!-- Add more fields if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock%}
