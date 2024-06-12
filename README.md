@@ -10,6 +10,10 @@ I am developing a flask web_application and integrate it with various hashtag#ma
 2. Customer wants to track the status of their order or shipment.
 3. Customer needs assistance with account creation, password reset, or account settings.
 4. ...
-#### The interface of the application will be like this (but a bit more beautiful :D):
+#### The interface of the application will be something like this:
 
 <img src="assets/overview3.png">
+
+<img src="assets/main.png">
+
+<img src="assets/main2.png">
