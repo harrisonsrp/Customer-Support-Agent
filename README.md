@@ -12,4 +12,4 @@ I am developing a flask web_application and integrate it with various hashtag#ma
 4. ...
 #### The interface of the application will be like this (but a bit more beautiful :D):
 
-<img src="overview3.png">
+<img src="assets/overview3.png">
