@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Add the 'controller' directory to sys.path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'Controllers'))
+
 from flask import Flask, render_template, render_template, request, redirect, jsonify, url_for
 from Database import collection_tickets, collection_faq,collection_faq_cat,collection_users
 
@@ -91,7 +97,7 @@ def sendTicket():
 def submit_ticket():
     if request.method == 'POST':
         # Pass input data in Ticket class
-        get_ticket_data = Ticket()
+        get_ticket_data = Ticket.Ticket()
         # Save data to DB
         get_ticket_data.save_to_db(ticket_coll)
         # Return to main page
@@ -115,14 +121,14 @@ def faq_create():
 def submitFAQ():
     if request.method == 'POST':
         # Get FAQ data
-        get_faq_data = FAQ()
+        get_faq_data = FAQ.FAQ()
         # Save to DB
         get_faq_data.save_to_db(faq_coll)
         return redirect('/faq')
 
 
 # Index Page
-@app.route('/index')
+@app.route('/')
 def index():
     return render_template('index.html')
     
