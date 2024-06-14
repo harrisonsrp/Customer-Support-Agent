@@ -1,15 +1,12 @@
-# Intelligent Customer Support System
+# Intelligent E-commerce Website
 
 
 ## Problem_Statement:
-Many businesses struggle to provide efficient and personalized customer support due to the huge number of inquiries. Manual handling of customer queries which can lead to delays in responses. A machine learning-powered customer support system can automate responses to common issues. In this project I am working specifically on understanding and taking simple action based on customer's issues. However, in future updates I will add more automated action to this application.
+Many businesses struggle to provide efficient and personalized customer support due to the huge number of inquiries. Manual handling of customer queries which can lead to delays in responses. A machine learning-powered customer support system can automate responses to common issues. In this project I am building an e-commerce website and integrate it with ML and LLM to solve this issue. 
 
 ## Proposed_Solution:
-I am developing a flask web_application and integrate it with various hashtag#machine_learning models to classify and take action to customer issues such as:
-1. Customer has questions or concerns about their billing statement or payment process.
-2. Customer wants to track the status of their order or shipment.
-3. Customer needs assistance with account creation, password reset, or account settings.
-4. ...
+In the administrative part you will be able to see the sale’s prediction, new products classification bases on high and low demand, an AI agent powered by LLM to solve customer’s queries and etc. In the user panel also there will be a recommendation system to show them related products based on their previous purchase and a chatbot powered by LLM
+
 #### The interface of the application will be something like this:
 
 <img src="assets/overview3.png">
