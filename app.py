@@ -11,7 +11,9 @@ from Database import collection_tickets, collection_faq,collection_faq_cat,colle
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
+# DB
+from flask_sqlalchemy import SQLAlchemy
+    
 #Objects
 import Ticket
 import FAQ
@@ -20,6 +22,11 @@ import Authentication as Auth
 app = Flask(__name__)
 app.secret_key = '##Secret##' #for flash
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'  # Update this URI to match your database
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# The SQLAlchemy object
+db = SQLAlchemy(app)
 
 
 login_manager = LoginManager(app)
