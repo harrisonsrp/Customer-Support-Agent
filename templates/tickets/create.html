@@ -23,9 +23,9 @@
                 
                 <label>Category</label>
                 <div class="form-group">
-                    <select id="categorySelect" name="ticket_category" class="form-control">
+                    <select id="categorySelect" name="category_id" class="form-control">
                         {% for cat in category %}
-                            <option  value="{{ cat.name }}">{{ cat.name }}</option>
+                            <option  value="{{ cat.id }}">{{ cat.name }}</option>
                         {% endfor %}
                     </select>
                 </div>

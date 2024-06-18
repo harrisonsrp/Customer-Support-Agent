@@ -1,5 +1,5 @@
 #Flask lib
-from flask import flash, redirect, url_for,render_template
+from flask import flash
 
 #Auth lib
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
@@ -9,8 +9,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 #Database
-from Database import collection_users
-
+from User import Users
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -30,25 +29,20 @@ class User(UserMixin):
         self.username = username
         self.email = email
         self.password = password
-        
+            
     def register(form):
         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-        new_user = {
-        '_id': collection_users.count_documents({}) + 1,
-        'username': form.username.data,
-        'email': form.email.data,
-        'password': hashed_password
-        }
-        collection_users.insert_one(new_user)
+        new_user = Users.create(username=form.username.data, email=form.email.data, password=hashed_password)
         flash('Your account has been created!', 'success')
         
     def login(form):
-        user_data = collection_users.find_one({'email': form.email.data})
-        if user_data and check_password_hash(user_data['password'], form.password.data):
-            user = User(id=user_data['_id'], username=user_data['username'], email=user_data['email'], password=user_data['password'])
+        user_data = Users.read(form.email.data)  # Assuming `read()` expects plain email
+        if user_data and check_password_hash(user_data.password, form.password.data):
+            user = User(id=user_data.id, username=user_data.username, email=user_data.email, password=user_data.password)
             login_user(user)
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
+
     
     def logout():
         logout_user()

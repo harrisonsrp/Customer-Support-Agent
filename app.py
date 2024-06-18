@@ -5,28 +5,29 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'Controllers'))
 
 from flask import Flask, render_template, render_template, request, redirect, jsonify, url_for
-from Database import collection_tickets, collection_faq,collection_faq_cat,collection_users
+
 
 #Auth lib
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# DB
-from flask_sqlalchemy import SQLAlchemy
-    
+
 #Objects
-import Ticket
+from Database import db
+from User import Users
+from Ticket import Tickets
+from Category import Categories
 import FAQ
 import Authentication as Auth
 # Create Flask app instance
 app = Flask(__name__)
 app.secret_key = '##Secret##' #for flash
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'  # Update this URI to match your database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\Projects\Customer_support\Database\database.db'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # The SQLAlchemy object
-db = SQLAlchemy(app)
+db.init_app(app)
 
 
 login_manager = LoginManager(app)
@@ -35,20 +36,21 @@ login_manager.login_view = 'login'
 
 
 ####### DataBase Collections ####
-ticket_coll = collection_tickets
-faq_coll = collection_faq
-faq_cat_coll = collection_faq_cat
+# user_table = Database.UserTable
+# faq_coll = collection_faq
+# faq_cat_coll = collection_faq_cat
 ####### Start Routes #######
 
 
 ####### Auth ######
 @login_manager.user_loader
 def load_user(user_id):
-    user = collection_users.find_one({"_id": int(user_id)})
+    user = Users.query.get(int(user_id))
     if user:
-        return Auth.User(id=user['_id'], username=user['username'], email=user['email'], password=user['password'])
+        return Auth.User(id=user.id, username=user.username, email=user.email, password=user.password)
     return None
-    
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = Auth.RegistrationForm()
@@ -86,15 +88,15 @@ def home():
 @app.route('/ticketShow')
 @login_required
 def ticketShow():
-    data_ticekt = ticket_coll.find({})
-    return render_template('tickets/index.html', data=data_ticekt)
+    data_ticket = Tickets.read()
+    return render_template('tickets/index.html', data=data_ticket)
 
 
 # New ticket Page Route
 @app.route('/sendTicket')
 @login_required
 def sendTicket():
-    category = faq_cat_coll.find({})
+    category = Categories.read()
     return render_template('tickets/create.html', category = category)
 
 
@@ -103,11 +105,8 @@ def sendTicket():
 @login_required
 def submit_ticket():
     if request.method == 'POST':
-        # Pass input data in Ticket class
-        get_ticket_data = Ticket.Ticket()
-        # Save data to DB
-        get_ticket_data.save_to_db(ticket_coll)
-        # Return to main page
+        form_data = Tickets.read_form()
+        Tickets.create(form_data)
         return redirect('/sendTicket')
 
 # FAQ Route
