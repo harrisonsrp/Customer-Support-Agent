@@ -15,6 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 #Objects
 from Database import db
 from User import Users
+from Admin import Admins
 from Ticket import Tickets
 from Category import Categories
 import FAQ
@@ -30,20 +31,57 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+# Initialize Flask-Login
+user_login_manager = LoginManager(app)
+admin_login_manager = LoginManager(app)
 
+# Set custom login views
+user_login_manager.login_view = 'login'
+admin_login_manager.login_view = 'loginAdmin'
 
+####### Aadmin Auth ######
+@admin_login_manager.user_loader
+def load_admin(admin_id):
+    admin = Admins.query.get(int(admin_id))
+    if admin:
+        return Auth.Admin(id=admin.id, username=admin.username, email=admin.email, password=admin.password)
+    return None
 
-####### DataBase Collections ####
-# user_table = Database.UserTable
-# faq_coll = collection_faq
-# faq_cat_coll = collection_faq_cat
-####### Start Routes #######
+@app.route('/register-admin', methods=['GET', 'POST'])
+def registerAdmin():
+    form = Auth.RegistrationForm()
+    if form.validate_on_submit():
+        Auth.Admin.register(form)
+        return redirect(url_for('loginAdmin')) 
+    else:
+        return render_template('Auth/admin/register.html', form=form)
 
+@app.route('/login-admin', methods=['GET', 'POST'])
+def loginAdmin():
+    form = Auth.LoginForm()
+    if form.validate_on_submit():
+        Auth.Admin.login(form)
+        return redirect(url_for('HomeAdmin'))
+    else:
+        return render_template('Auth/admin/login.html', form=form)
+    
 
-####### Auth ######
-@login_manager.user_loader
+@app.route('/home-admin')
+@login_required
+def HomeAdmin():
+    if current_user.is_authenticated:
+        return render_template('Auth/admin/home.html')
+    else:
+        return render_template('Auth/admin/login.html')
+
+@app.route('/logout-admin')
+@login_required
+def logoutAdmin():
+    Auth.Admin.logout()
+    return redirect(url_for('loginAdmin'))
+
+####### User Auth ######
+@user_login_manager.user_loader
 def load_user(user_id):
     user = Users.query.get(int(user_id))
     if user:

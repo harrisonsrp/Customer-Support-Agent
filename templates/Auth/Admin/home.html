@@ -1,0 +1,42 @@
+{% extends "Auth/admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="text-center mb-0">Welcome, {{ current_user.username }}!</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info" role="alert">
+                        You are logged in and viewing your dashboard.
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">Profile</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Email: {{ current_user.email }}</p>
+                                    <p>Name: {{ current_user.username }}</p>
+                                    <!-- Add more profile details here if needed -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Add more dashboard widgets here if needed -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-center">
+                    <a href="{{ url_for('logoutAdmin') }}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 #Database
 from User import Users
+from Admin import Admins
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -36,7 +37,7 @@ class User(UserMixin):
         flash('Your account has been created!', 'success')
         
     def login(form):
-        user_data = Users.read(form.email.data)  # Assuming `read()` expects plain email
+        user_data = Users.read(form.email.data) 
         if user_data and check_password_hash(user_data.password, form.password.data):
             user = User(id=user_data.id, username=user_data.username, email=user_data.email, password=user_data.password)
             login_user(user)
@@ -50,7 +51,7 @@ class User(UserMixin):
     def home():
         pass
 
-class Admin:
+class Admin(UserMixin):
     
     def __init__(self, id, username, email, password):
         self.id = id
@@ -58,14 +59,27 @@ class Admin:
         self.email = email
         self.password = password
         
-    def register():
-        pass
-    
-    def login():
-        pass
+        
+    def register(form):
+        hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+        new_admin = Admins.create(username=form.username.data, 
+                                  email=form.email.data, 
+                                  password=hashed_password
+                                  )
+        flash('Your account has been created!', 'success')
+        
+    def login(form):
+        admin_data = Admins.read(form.email.data) 
+        if admin_data and check_password_hash(admin_data.password, form.password.data):
+            admin = Admin(id=admin_data.id,
+                          username=admin_data.username,
+                          email=admin_data.email,
+                          password=admin_data.password
+                          )
+            login_user(admin)
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     
     def logout():
-        pass
-    
-    def home():
-        pass
+        logout_user()
+        
